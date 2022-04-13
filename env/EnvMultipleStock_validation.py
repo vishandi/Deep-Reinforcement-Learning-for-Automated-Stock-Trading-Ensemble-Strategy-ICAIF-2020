@@ -24,7 +24,7 @@ class StockEnvValidation(gym.Env):
         # +[macd 1-30]+ [rsi 1-30] + [cci 1-30] + [adx 1-30]
         self.observation_space = spaces.Box(low=0, high=np.inf, shape = (6*STOCK_DIM + 1,))
         # load data from a pandas dataframe
-        self.data = self.df.loc[self.day,:]
+        self.data = self.df.loc[[self.day]]
         self.terminal = False     
         self.turbulence_threshold = turbulence_threshold
         # initalize state
@@ -156,7 +156,7 @@ class StockEnvValidation(gym.Env):
                 self._buy_stock(index, actions[index])
 
             self.day += 1
-            self.data = self.df.loc[self.day,:]         
+            self.data = self.df.loc[[self.day]]         
             self.turbulence = self.data['turbulence'].values[0]
             #print(self.turbulence)
             #load next state
@@ -185,7 +185,7 @@ class StockEnvValidation(gym.Env):
     def reset(self):  
         self.asset_memory = [INITIAL_ACCOUNT_BALANCE]
         self.day = 0
-        self.data = self.df.loc[self.day,:]
+        self.data = self.df.loc[[self.day]]
         self.turbulence = 0
         self.cost = 0
         self.trades = 0
