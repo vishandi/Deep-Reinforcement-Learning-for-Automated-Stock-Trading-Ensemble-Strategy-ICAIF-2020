@@ -30,13 +30,13 @@ def run_model() -> None:
     # 2015/10/01 is the date that validation starts
     # 2016/01/01 is the date that real trading starts
     # unique_trade_date needs to start from 2015/10/01 for validation purpose
-    unique_trade_date = data[(data.datadate > 20151001)&(data.datadate <= 20200707)].datadate.unique()
+    unique_trade_date = data[(data.datadate > TRADING_START_DATE)&(data.datadate <= TRADING_STOP_DATE)].datadate.unique()
     print(unique_trade_date)
 
     # rebalance_window is the number of months to retrain the model
     # validation_window is the number of months to validation the model and select for trading
-    rebalance_window = 63
-    validation_window = 63
+    rebalance_window = REBALANCE_WINDOW
+    validation_window = VALIDATION_WINDOW
     
     ## Ensemble Strategy
     run_ensemble_strategy(df=data, 

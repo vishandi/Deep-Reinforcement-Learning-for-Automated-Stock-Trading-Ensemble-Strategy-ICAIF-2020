@@ -24,7 +24,7 @@ def data_split(df,start,end):
     data.index = data.datadate.factorize()[0]
     return data
 
-def calcualte_price(df):
+def calculate_price(df):
     """
     calcualte adjusted close price, open-high-low price and volume
     :param data: (df) pandas dataframe
@@ -97,7 +97,7 @@ def preprocess_data():
     # get data after 2009
     df = df[df.datadate>=20090000]
     # calcualte adjusted price
-    df_preprocess = calcualte_price(df)
+    df_preprocess = calculate_price(df)
     # add technical indicators using stockstats
     df_final=add_technical_indicator(df_preprocess)
     # fill the missing values at the beginning
@@ -110,14 +110,14 @@ def add_turbulence(df):
     :param data: (df) pandas dataframe
     :return: (df) pandas dataframe
     """
-    turbulence_index = calcualte_turbulence(df)
+    turbulence_index = calculate_turbulence(df)
     df = df.merge(turbulence_index, on='datadate')
     df = df.sort_values(['datadate','tic']).reset_index(drop=True)
     return df
 
 
 
-def calcualte_turbulence(df):
+def calculate_turbulence(df):
     """calculate turbulence index based on dow 30"""
     # can add other market assets
     
